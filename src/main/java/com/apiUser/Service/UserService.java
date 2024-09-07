@@ -5,12 +5,14 @@ import com.apiUser.Dto.Request.RequestLogin;
 import com.apiUser.Dto.Response.ResponseUserCredentials;
 import com.apiUser.Entity.RoleEntity;
 import com.apiUser.Entity.UserEntity;
+import com.apiUser.Exception.IDRoleNotFound;
 import com.apiUser.Repository.RoleRepository;
 import com.apiUser.Repository.UserRepository;
 import com.apiUser.Utils.JwtUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,7 +52,7 @@ public class UserService {
    public ResponseUserCredentials singUp(RequestCreateUser requestCreateUser){
 
 
-      RoleEntity rol = rolRepository.findById(1L).orElseThrow(() -> new NullPointerException("Not found the rol"));
+      RoleEntity rol = rolRepository.findById(2L).orElseThrow(() -> new IDRoleNotFound("Role ID not found in database", HttpStatus.NOT_FOUND));
 
       UserEntity user= UserEntity.builder()
                                  .name(requestCreateUser.name())
